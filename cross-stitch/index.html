@@ -58,10 +58,10 @@ if(!/^lab-|^direct$/.test(src))src='lab-'+src;
 var once={};function track(n,d,one){if(one){if(once[n])return;once[n]=1}d=d||{};d.idea=IDEA;d.src=src;if(cam)d.cam=cam;var go=function(){try{window.umami&&window.umami.track(n,d)}catch(x){}};if(window.umami)go();else window.addEventListener('load',function(){setTimeout(go,300)})}
 function used(){track('lab_tool_use',{},1)}
 track('lab_view');
-var T=document.querySelector('[data-tool]'),O=T.querySelector('[data-out]');function f(x){return (Math.round(x*10)/10).toString()}
+var T=document.querySelector('[data-tool]'),O=T.querySelector('[data-out]');function fmt(x){return (Math.round(x*10)/10).toString()}
 function calc(){var w=+T.querySelector('[data-w]').value,h=+T.querySelector('[data-h]').value,c=T.querySelector('[data-ct]').value,m=+T.querySelector('[data-m]').value||0,ct=parseFloat(c);
-if(!(w>0&&h>0)){O.textContent='Enter the stitch count from your pattern.';return}var W=w/ct,H=h/ct;
-O.innerHTML='Finished design: <b>'+f(W)+' × '+f(H)+' in</b> ('+f(W*2.54)+' × '+f(H*2.54)+' cm)<br>Cut your fabric: <b>'+f(W+2*m)+' × '+f(H+2*m)+' in</b> ('+f((W+2*m)*2.54)+' × '+f((H+2*m)*2.54)+' cm)'+(c.indexOf('o2')>0?'<br><span class="small">Over 2 threads: '+(ct*2)+'-count fabric works like '+ct+' stitches per inch.</span>':'')}
+ifmt(!(w>0&&h>0)){O.textContent='Enter the stitch count from your pattern.';return}var W=w/ct,H=h/ct;
+O.innerHTML='Finished design: <b>'+fmt(W)+' × '+fmt(H)+' in</b> ('+fmt(W*2.54)+' × '+fmt(H*2.54)+' cm)<br>Cut your fabric: <b>'+fmt(W+2*m)+' × '+fmt(H+2*m)+' in</b> ('+fmt((W+2*m)*2.54)+' × '+fmt((H+2*m)*2.54)+' cm)'+(c.indexOfmt('o2')>0?'<br><span class="small">Over 2 threads: '+(ct*2)+'-count fabric works like '+ct+' stitches per inch.</span>':'')}
 T.querySelectorAll('input,select').forEach(function(el){el.addEventListener('input',function(){used();calc()})});calc();
 var box=document.querySelector('[data-wl-box]'),f=box.querySelector('form'),msg=box.querySelector('.msg'),plan='none',sticky=document.querySelector('[data-sticky]');
 if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)track('lab_form_view',{},1);sticky.style.display=(!e.isIntersecting&&innerWidth<700&&scrollY>200)?'block':'none'})}).observe(box);addEventListener('scroll',function(){var r=box.getBoundingClientRect();sticky.style.display=(innerWidth<700&&scrollY>200&&(r.top>innerHeight||r.bottom<0))?'block':'none'},{passive:true})}
